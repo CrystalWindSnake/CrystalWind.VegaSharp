@@ -1,0 +1,31 @@
+﻿{
+  "data": {
+    "values": [
+      {
+        "Name": "a",
+        "Value": 12
+      },
+      {
+        "Name": "b",
+        "Value": 20
+      },
+      {
+        "Name": "c",
+        "Value": 25
+      }
+    ]
+  },
+  "mark": {
+    "type": "bar"
+  },
+  "encoding": {
+    "x": {
+      "field": "Name",
+      "type": "nominal"
+    },
+    "y": {
+      "field": "Value",
+      "type": "quantitative"
+    }
+  }
+}
