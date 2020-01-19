@@ -165,11 +165,7 @@ namespace ConsoleApp_test
             var line = cm.SetMark(Mark.Line);
             var point = cm.SetMark(Mark.Point);
 
-            //Vega.Layer(line, point).ToFile("res.html");
-
             (line + point).ToFile("res.html");
-
-
         }
 
 

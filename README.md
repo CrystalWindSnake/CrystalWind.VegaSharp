@@ -4,6 +4,7 @@ a .NET port of Vega
 
 
 # 使用
+生成柱状图：
 ```C#
 var names = "a b c d e f g h i".Split(" ");
 var values = new[] { 28, 55, 43, 91, 81, 53, 19, 87, 52 };
@@ -16,101 +17,34 @@ Vega.SetData(source)
     .ToFile("res.html");
 ```
 
-```html
-<!DOCTYPE html>
-<html>
+从网络直接读取json数据，生成柱状图，y轴统计x轴分数段的个数
+```C#
+var url = @"https://vega.github.io/vega-datasets/data/movies.json";
 
-<head>
-    <meta charset="utf-8" />
+Vega.SetData(url)
+    .SetMark(Mark.Bar)
+    .SetEncoding(
+        x: Vega.X_Y("IMDB_Rating", FieldType.Quantitative, bin: true),
+        y: Vega.X_Y_Aggregate("count")
+        )
+    .ToFile("res.html");
+```
 
-    <script src="https://cdn.jsdelivr.net/npm/vega@5.9.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.0.2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.2.1"></script>
+线图 和 点图 叠加。只显示 symbol值为 GOOG 的数据：
+```C#
+var url = @"https://vega.github.io/vega-datasets/data/stocks.csv";
 
-    <style media="screen">
-        /* Add space between Vega-Embed links  */
-        .vega-actions a {
-            margin-right: 5px;
-        }
-    </style>
-</head>
+var cm = Vega.SetData(url)
+                .SetEncoding(
+                    x: Vega.X_Y("date", FieldType.Temporal),
+                    y: Vega.X_Y("price", FieldType.Quantitative),
+                    color: Vega.X_Y("symbol", FieldType.Nominal))
+                .SetFilter("datum.symbol == 'GOOG'");
 
-<body>
-    <!-- Container for the visualization -->
-    <div id="vis"></div>
+var line = cm.SetMark(Mark.Line);
+var point = cm.SetMark(Mark.Point);
 
-    <script>
-        // Assign the specification to a local variable vlSpec.
-        var vlSpec = {
-  "layer": [
-    {
-      "mark": {
-        "type": "line"
-      },
-      "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal"
-        },
-        "y": {
-          "field": "price",
-          "type": "quantitative"
-        },
-        "color": {
-          "field": "symbol",
-          "type": "nominal"
-        }
-      },
-      "transform": [
-        {
-          "filter": "datum.symbol == 'GOOG'"
-        }
-      ]
-    },
-    {
-      "mark": {
-        "type": "point"
-      },
-      "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal"
-        },
-        "y": {
-          "field": "price",
-          "type": "quantitative"
-        },
-        "color": {
-          "field": "symbol",
-          "type": "nominal"
-        }
-      },
-      "transform": [
-        {
-          "filter": "datum.symbol == 'GOOG'"
-        }
-      ]
-    }
-  ],
-  "$schema": "https://vega.github.io/schema/vega-lite/v3.4.0.json",
-  "config": {
-    "view": {
-      "width": 400.0,
-      "height": 300.0
-    }
-  },
-  "data": {
-    "url": "https://vega.github.io/vega-datasets/data/stocks.csv"
-  }
-};
-
-        // Embed the visualization in the container with id `vis`
-        vegaEmbed('#vis', vlSpec);
-    </script>
-</body>
-
-</html>
-
+(line + point).ToFile("res.html");
 ```
 
 
