@@ -1,6 +1,6 @@
 ﻿
 
-namespace CrystalWind.VegaSharp.Core
+namespace CrystalWind.VegaSharp
 {
     public interface IVegaObject
     {

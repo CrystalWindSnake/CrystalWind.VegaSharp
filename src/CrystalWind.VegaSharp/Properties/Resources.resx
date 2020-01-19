@@ -122,7 +122,6 @@
 &lt;html&gt;
 
 &lt;head&gt;
-    &lt;title&gt;Vega-Lite Bar Chart&lt;/title&gt;
     &lt;meta charset="utf-8" /&gt;
 
     &lt;script src="https://cdn.jsdelivr.net/npm/vega@5.9.0"&gt;&lt;/script&gt;
@@ -138,7 +137,6 @@
 &lt;/head&gt;
 
 &lt;body&gt;
-    &lt;h1&gt;Template for Embedding Vega-Lite Visualization&lt;/h1&gt;
     &lt;!-- Container for the visualization --&gt;
     &lt;div id="vis"&gt;&lt;/div&gt;
 

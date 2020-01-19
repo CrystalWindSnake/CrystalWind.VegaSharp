@@ -7,6 +7,11 @@ namespace CrystalWind.VegaSharp.Core.Encodings
         [JsonProperty(PropertyName = "field")]
         public string Name { get; set; }
 
-        public string Type { get; set; }
+        public FieldType Type { get; set; } = FieldType.None;
+
+        public bool Bin { get; set; }
+
+        public string Aggregate { get; set; }
+
     }
 }

@@ -65,7 +65,6 @@ namespace CrystalWind.VegaSharp.Properties {
         ///&lt;html&gt;
         ///
         ///&lt;head&gt;
-        ///    &lt;title&gt;Vega-Lite Bar Chart&lt;/title&gt;
         ///    &lt;meta charset=&quot;utf-8&quot; /&gt;
         ///
         ///    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vega@5.9.0&quot;&gt;&lt;/script&gt;
@@ -81,7 +80,7 @@ namespace CrystalWind.VegaSharp.Properties {
         ///&lt;/head&gt;
         ///
         ///&lt;body&gt;
-        ///    [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    &lt;!-- Container for the visualization -- [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string Template {
             get {

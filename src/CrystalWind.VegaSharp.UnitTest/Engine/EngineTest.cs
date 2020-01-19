@@ -2,6 +2,7 @@ using CrystalWind.VegaSharp.Core;
 using CrystalWind.VegaSharp.Core.Data;
 using CrystalWind.VegaSharp.Core.Encodings;
 using CrystalWind.VegaSharp.Core.Marks;
+using CrystalWind.VegaSharp.Core.Specifications;
 using System;
 using System.IO;
 using Xunit;
@@ -13,24 +14,21 @@ namespace CrystalWind.VegaSharp.UnitTest
         [Fact]
         public void Test_ToJsonView()
         {
-            var data = new ArrayData<MyClass>
-            {
-                Records = new[]
-              {
+            var data = new RecordArrayData<MyClass>(new[]
+                {
                     new MyClass{Name="a",Value=12},
                     new MyClass{Name="b",Value=20},
                     new MyClass{Name="c",Value=25},
-                }
-            };
+                });
 
             var mark = new Bar();
             var ec = new Encoding
             {
-                X = new Field { Name = "Name", Type = "nominal" },
-                Y = new Field { Name = "Value", Type = "quantitative" }
+                X = Vega.X_Y("Name"),
+                Y = Vega.X_Y("Value", FieldType.Quantitative)
             };
 
-            var eg = new Engine
+            var eg = new SingleViewSpecification
             {
                 Data = data,
                 Encoding = ec,
