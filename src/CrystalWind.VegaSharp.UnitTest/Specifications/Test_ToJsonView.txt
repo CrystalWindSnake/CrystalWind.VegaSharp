@@ -13,6 +13,12 @@
     }
   },
   "$schema": "https://vega.github.io/schema/vega-lite/v3.4.0.json",
+  "config": {
+    "view": {
+      "width": 400.0,
+      "height": 300.0
+    }
+  },
   "data": {
     "values": [
       {

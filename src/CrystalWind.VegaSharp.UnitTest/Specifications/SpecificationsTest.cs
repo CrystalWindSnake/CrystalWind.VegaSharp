@@ -9,9 +9,9 @@ using Xunit;
 
 namespace CrystalWind.VegaSharp.UnitTest
 {
-    public class EngineTest
+    public class SpecificationsTest
     {
-        [Fact]
+        //[Fact]
         public void Test_ToJsonView()
         {
             var data = new RecordArrayData<MyClass>(new[]
