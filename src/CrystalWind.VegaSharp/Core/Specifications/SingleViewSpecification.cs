@@ -38,7 +38,7 @@ namespace CrystalWind.VegaSharp.Core.Specifications
 
         public IMark Mark { get; set; }
 
-        public IEncoding Encoding { get; set; }
+        public Encoding Encoding { get; set; }
 
 
         public ViewBackground View { get; set; }

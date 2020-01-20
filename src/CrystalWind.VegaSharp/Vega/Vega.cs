@@ -52,12 +52,6 @@ namespace CrystalWind.VegaSharp
             return eg;
         }
 
-        public static SingleViewSpecification SetEncoding(IEncoding encoding)
-        {
-            var eg = GetDefalut();
-            eg.Encoding = encoding;
-            return eg;
-        }
 
 
         public static SingleViewSpecification AddSelection(Selection selection)

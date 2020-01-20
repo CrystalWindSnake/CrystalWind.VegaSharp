@@ -24,12 +24,13 @@ namespace ConsoleApp_test
         static void Main(string[] args)
         {
 
-            NewMethod7();
+            NewMethod8();
             Console.WriteLine("done");
             Console.ReadKey();
 
         }
 
+#if tru
         private static void NewMethod1()
         {
             var names = "a b c d e f g h i".Split(" ");
@@ -157,6 +158,7 @@ namespace ConsoleApp_test
 
             (left | right).ToFile("res.html");
         }
+#endif
 
         private static void NewMethod7()
         {
@@ -176,15 +178,37 @@ namespace ConsoleApp_test
                         .SetMark(Mark.Point)
                         .SetEncoding(en =>
                         {
-                            en.Y = Vega.X_Y("Horsepower", FieldType.Quantitative);
+                            en.Y = Vega.Y().SetName("Horsepower").SetType(FieldType.Quantitative);
                             en.Color = cond.ToColor(Color.Gray);
                         })
                         .SetSelection(selection);
 
-            var left = cm.SetEncoding(en => en.X = Vega.X_Y("Acceleration", FieldType.Quantitative));
-            var right = cm.SetEncoding(en => en.X = Vega.X_Y("Miles_per_Gallon", FieldType.Quantitative));
+            var left = cm.SetEncoding(en => en.X = Vega.X().SetName("Acceleration").SetType(FieldType.Quantitative));
+            var right = cm.SetEncoding(en => en.X = Vega.X().SetName("Miles_per_Gallon").SetType(FieldType.Quantitative));
 
             (left | right).ToFile("res.html");
+        }
+
+        /// <summary>
+        /// https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding
+        /// </summary>
+        private static void NewMethod8()
+        {
+            var url = @"https://vega.github.io/vega-datasets/data/population.json";
+
+            var cm = Vega.SetData(url)
+                        .SetMark(Mark.Bar)
+                        .SetEncoding(en =>
+                        {
+                            en.Y = Vega.Y().SetName("age").SetType(FieldType.Ordinal).SetSort("-x");
+                            en.X = Vega.X().SetName("people").SetType(FieldType.Quantitative)
+                                            .SetAggregate("sum");
+
+                        })
+                        .SetFilter(d => d.Number("year") == 2000);
+
+            cm.ToFile("res.html");
+
         }
     }
 

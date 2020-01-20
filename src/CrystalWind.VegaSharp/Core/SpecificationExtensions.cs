@@ -7,6 +7,7 @@ using CrystalWind.VegaSharp.Core.Transforms;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -37,16 +38,29 @@ namespace CrystalWind.VegaSharp.Core
             return engine;
         }
 
-        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Action<Encoding> action)
+        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Action<EncodingWrapper> action)
         {
             engine = engine.Copy();
             if (engine.Encoding == null)
             {
                 engine.Encoding = new Encoding();
             }
-            action(engine.Encoding as Encoding);
+            EncodingWrapper wp = engine.Encoding;
+            action(wp);
+            engine.Encoding = wp;
             return engine;
         }
+
+        //public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Action<Encoding> action)
+        //{
+        //    engine = engine.Copy();
+        //    if (engine.Encoding == null)
+        //    {
+        //        engine.Encoding = new Encoding();
+        //    }
+        //    action(engine.Encoding as Encoding);
+        //    return engine;
+        //}
 
 
         private static SingleViewSpecification SetEncodingDynamic(this SingleViewSpecification engine, Field x, Field y, dynamic color)

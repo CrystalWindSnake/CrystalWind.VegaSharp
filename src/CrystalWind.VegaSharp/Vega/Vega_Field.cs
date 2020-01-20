@@ -15,6 +15,46 @@ namespace CrystalWind.VegaSharp
     {
 
 
+        public static XYField X()
+        {
+            return new XYField();
+        }
+
+        public static XYField Y()
+        {
+            return new XYField();
+        }
+
+        public static XYField SetName(this XYField x, string name)
+        {
+            x.Name = name;
+            return x;
+        }
+
+        public static XYField SetType(this XYField x, FieldType type)
+        {
+            x.Type = type;
+            return x;
+        }
+
+        public static XYField SetBin(this XYField x, bool bin)
+        {
+            x.Bin = bin;
+            return x;
+        }
+
+        public static XYField SetAggregate(this XYField x, string method)
+        {
+            x.Aggregate = method;
+            return x;
+        }
+
+        public static XYField SetSort(this XYField x, string sort)
+        {
+            x.Sort = sort;
+            return x;
+        }
+
         public static Field X_Y_Aggregate(string method)
         {
             return X_Y_Aggregate(method, FieldType.Quantitative);
