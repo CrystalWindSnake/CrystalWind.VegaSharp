@@ -5,7 +5,7 @@
         public Field X { get; set; }
         public Field Y { get; set; }
 
-        public Field Color { get; set; }
+        public dynamic Color { get; set; }
 
         public Field Column { get; set; }
     }

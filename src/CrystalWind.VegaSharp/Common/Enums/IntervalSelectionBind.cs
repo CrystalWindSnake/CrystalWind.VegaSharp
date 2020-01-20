@@ -6,12 +6,10 @@ using System.Runtime.Serialization;
 namespace CrystalWind.VegaSharp
 {
 
-    public enum FieldType
+    public enum IntervalSelectionBind
     {
         None,
-        Nominal,
-        Ordinal,
-        Quantitative,
-        Temporal
+        Scales,
+        Legend
     }
 }

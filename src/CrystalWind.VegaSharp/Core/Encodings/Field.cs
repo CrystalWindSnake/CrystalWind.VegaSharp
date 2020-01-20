@@ -2,7 +2,7 @@
 
 namespace CrystalWind.VegaSharp.Core.Encodings
 {
-    public class Field : IVegaObject
+    public class Field : IVegaObject, IMixValue
     {
         [JsonProperty(PropertyName = "field")]
         public string Name { get; set; }

@@ -11,6 +11,7 @@ using CrystalWind.VegaSharp.Core.Selections;
 using CrystalWind.VegaSharp.Core.Projections;
 using System.Collections.Generic;
 using CrystalWind.VegaSharp.Core.Transforms;
+using CrystalWind.VegaSharp.Core.ViewCompositions;
 
 namespace CrystalWind.VegaSharp.Core.Specifications
 {
@@ -42,7 +43,8 @@ namespace CrystalWind.VegaSharp.Core.Specifications
 
         public ViewBackground View { get; set; }
 
-        public Selection Selection { get; set; }
+        [JsonProperty(PropertyName = "selection")]
+        public IDictionary<string, Selection> Selections { get; set; }
 
         public Projection Projection { get; set; }
 
@@ -68,27 +70,26 @@ namespace CrystalWind.VegaSharp.Core.Specifications
                 Height = Height,
                 Mark = Mark,
                 Projection = Projection,
-                Selection = Selection,
+                Selections = Selections,
                 View = View,
                 Width = Width,
             };
         }
 
 
-
-
-        public static LayerSpecification operator +(SingleViewSpecification left, SingleViewSpecification right)
+        public static LayerComposition operator +(SingleViewSpecification left, SingleViewSpecification right)
         {
-            return LayerSpecification.CreateFrom(left, right);
+            return new LayerComposition(new[] { left, right });
         }
 
-        public static LayerSpecification operator +(LayerSpecification left, SingleViewSpecification right)
+        public static HConcatComposition operator |(SingleViewSpecification left, SingleViewSpecification right)
         {
-            var res = left.Copy();
-            res.Layers.Add(right);
+            return new HConcatComposition(new[] { left, right });
+        }
 
-            res.Transforms = null;
-            return res;
+        public static VConcatComposition operator &(SingleViewSpecification left, SingleViewSpecification right)
+        {
+            return new VConcatComposition(new[] { left, right });
         }
     }
 

@@ -3,6 +3,7 @@ using CrystalWind.VegaSharp.Core.Configurations;
 using CrystalWind.VegaSharp.Core.Data;
 using CrystalWind.VegaSharp.Core.Encodings;
 using CrystalWind.VegaSharp.Core.Marks;
+using CrystalWind.VegaSharp.Core.Selections;
 using CrystalWind.VegaSharp.Core.Specifications;
 using System;
 using System.Collections;
@@ -59,7 +60,16 @@ namespace CrystalWind.VegaSharp
         }
 
 
-
+        public static SingleViewSpecification AddSelection(Selection selection)
+        {
+            var eg = GetDefalut();
+            if (eg.Selections == null)
+            {
+                eg.Selections = new Dictionary<string, Selection>();
+            }
+            eg.Selections.Add(selection.Name, selection);
+            return eg;
+        }
     }
 
 

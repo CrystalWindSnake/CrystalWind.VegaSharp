@@ -15,7 +15,6 @@ namespace CrystalWind.VegaSharp
     {
 
 
-
         public static Field X_Y_Aggregate(string method)
         {
             return X_Y_Aggregate(method, FieldType.Quantitative);
