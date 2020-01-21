@@ -34,8 +34,8 @@ namespace ConsoleApp_test
         {
             var url = @"https://vega.github.io/vega-datasets/data/movies.json";
 
-            var selection = Vega.SingleSelection("click")
-                            .SetOn("mousemove{100}")
+            var selection = Vega.MultiSelection("click")
+                            //.SetOn("mousemove{100}")
                             .SetEncodings("x");
 
             var x = Vega.PcField("IMDB_Rating:Q").SetBin(true);
