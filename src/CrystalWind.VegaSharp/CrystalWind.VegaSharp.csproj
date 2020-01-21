@@ -3,6 +3,20 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>VegaSharp.pfx</AssemblyOriginatorKeyFile>
+    <Version>0.1.0</Version>
+    <Authors>CrystalWind</Authors>
+    <Company />
+    <Description>声明方式构造数据可视化图表，使用 vega，vega-lite，输出html页面</Description>
+    <PackageLicenseUrl>https://github.com/CrystalWindSnake/CrystalWind.VegaSharp/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/CrystalWindSnake/CrystalWind.VegaSharp</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>E:\githubs\CrystalWind.VegaSharp\src\CrystalWind.VegaSharp\CrystalWind.VegaSharp.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
