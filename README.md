@@ -19,12 +19,10 @@ a .NET port of Vega
 # 教程
 
 
-
-
 ## 前提
 Nuget 安装：
 ```shell
-
+Install-Package CrystalWind.VegaSharp -Version 0.1.0
 ```
 
 ---
