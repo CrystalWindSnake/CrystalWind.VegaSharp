@@ -78,7 +78,7 @@ namespace ConsoleApp_test
                  })
                  .SetSelection(selection);
 
-            ((rect + circ) & bar)
+            ((rect + circ) | bar)
                 .SetResolveLegend(g =>
                 {
                     g.Color = ResolveValue.Independent;

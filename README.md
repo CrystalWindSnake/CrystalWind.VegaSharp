@@ -10,7 +10,8 @@ a .NET port of Vega
 [Winform示例](src/CrystalWind.VegaSharp.WindowsFormsSamples)
 
 ---
-
+多表联动：
+![](picts/Sample1.gif)
 
 
 
