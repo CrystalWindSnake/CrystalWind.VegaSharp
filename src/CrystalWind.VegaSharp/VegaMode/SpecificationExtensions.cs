@@ -116,6 +116,23 @@ namespace CrystalWind.VegaSharp.VegaMode
             engine.Selections.Add(selection.Name, selection);
             return engine;
         }
+
+
+
+        public static TopLevelSpecification SetResolveLegend(this TopLevelSpecification engine, Action<ResolveLegend> action)
+        {
+            if (engine.Resolve == null)
+            {
+                engine.Resolve = new Resolve();
+            }
+            if (engine.Resolve.Legend == null)
+            {
+                engine.Resolve.Legend = new ResolveLegend();
+            }
+
+            action(engine.Resolve.Legend);
+            return engine;
+        }
     }
 
 

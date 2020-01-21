@@ -63,7 +63,13 @@ namespace ConsoleApp_test
                                 .SetLegend("选中的总数");
                 });
 
-            (rect + circ).ToFile("res.html");
+            (rect + circ)
+                .SetResolveLegend(g =>
+                {
+                    g.Color = ResolveValue.Independent;
+                    g.Size = ResolveValue.Independent;
+                })
+                .ToFile("res.html");
 
         }
 

@@ -25,7 +25,6 @@ namespace CrystalWind.VegaSharp.Core.ViewCompositions
 
         [JsonIgnore]
         public IReadOnlyList<TopLevelSpecification> Specifications => _specifications as IReadOnlyList<TopLevelSpecification>;
-        public ResolveComposition Resolve { get; set; }
 
 
         public void AddSpecification(TopLevelSpecification specification)

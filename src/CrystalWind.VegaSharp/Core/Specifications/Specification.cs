@@ -23,7 +23,7 @@ namespace CrystalWind.VegaSharp.Core.Specifications
         [JsonProperty(PropertyName = "transform")]
         public IList<ITransform> Transforms { get; set; }
 
-        //public Resolve Resolve { get; set; }
+        public Resolve Resolve { get; set; }
 
     }
 
