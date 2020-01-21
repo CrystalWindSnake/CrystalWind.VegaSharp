@@ -34,7 +34,9 @@ namespace ConsoleApp_test
         {
             var url = @"https://vega.github.io/vega-datasets/data/movies.json";
 
-
+            var selection = Vega.SingleSelection("click")
+                            .SetOn("mousemove{100}")
+                            .SetEncodings("x");
 
             var x = Vega.PcField("IMDB_Rating:Q").SetBin(true);
             var y = Vega.PcField("Rotten_Tomatoes_Rating:Q").SetBin(true);
@@ -61,9 +63,22 @@ namespace ConsoleApp_test
                     en.Size = Vega.McField()
                                 .SetAggregate("count")
                                 .SetLegend("选中的总数");
-                });
+                })
+                .SetFilter(selection);
 
-            (rect + circ)
+
+            var bar = Vega.SetData(url)
+                 .SetMark(Vega.Marks.Bar)
+                 .SetEncoding(en =>
+                 {
+                     en.X = Vega.PcField("Major_Genre:N");
+                     en.Y = Vega.PcField().SetAggregate("count");
+                     en.Color = Vega.Condition().AddSelection(selection).AddValue(Color.SteelBlue)
+                         .ToColor(Color.Gray);
+                 })
+                 .SetSelection(selection);
+
+            ((rect + circ) & bar)
                 .SetResolveLegend(g =>
                 {
                     g.Color = ResolveValue.Independent;

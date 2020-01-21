@@ -15,7 +15,7 @@ namespace CrystalWind.VegaSharp.Core.ViewCompositions
         [JsonProperty(PropertyName = "hconcat")]
         public IReadOnlyCollection<TopLevelSpecification> HConcat => Specifications;
 
-        public static HConcatComposition operator +(HConcatComposition left, SingleViewSpecification right)
+        public static HConcatComposition operator |(HConcatComposition left, SingleViewSpecification right)
         {
             //var res = left.Copy();
             left.AddSpecification(right);

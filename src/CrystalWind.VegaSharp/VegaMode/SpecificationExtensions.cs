@@ -104,6 +104,24 @@ namespace CrystalWind.VegaSharp.VegaMode
             return engine;
         }
 
+        public static SingleViewSpecification SetFilter(this SingleViewSpecification engine, Selection selection)
+        {
+            engine = engine.Copy();
+
+            if (engine.Transforms == null)
+            {
+                engine.Transforms = new List<ITransform>();
+            }
+            engine.Transforms.Add(new FilterTransform
+            {
+                Filter = new Dictionary<string, string>
+                {
+                    {"selection",selection.Name }
+                }
+            });
+            return engine;
+        }
+
 
         public static SingleViewSpecification SetSelection(this SingleViewSpecification engine, Selection selection)
         {

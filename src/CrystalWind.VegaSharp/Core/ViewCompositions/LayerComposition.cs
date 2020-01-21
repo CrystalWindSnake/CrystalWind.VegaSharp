@@ -89,6 +89,16 @@ namespace CrystalWind.VegaSharp.Core.ViewCompositions
             //res.Transforms = null;
             return left;
         }
+
+        public static HConcatComposition operator |(LayerComposition left, SingleViewSpecification right)
+        {
+            return new HConcatComposition(new TopLevelSpecification[] { left, right });
+        }
+
+        public static VConcatComposition operator &(LayerComposition left, SingleViewSpecification right)
+        {
+            return new VConcatComposition(new TopLevelSpecification[] { left, right });
+        }
     }
 
 
