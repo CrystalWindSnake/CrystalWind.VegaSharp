@@ -1,64 +1,66 @@
 ﻿using System;
-
-using Newtonsoft.Json;
-using System.IO;
-using System.Drawing;
-using Newtonsoft.Json.Serialization;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Drawing;
 
-
-namespace ConsoleApp_test
+namespace CrystalWind.VegaSharp.WindowsFormsSamples
 {
     using CrystalWind.VegaSharp;
     using CrystalWind.VegaSharp.VegaMode;
 
-
-    class Program
+    public struct SamplesResult
     {
-        static void Main(string[] args)
+        public string Desc { get; set; }
+
+        public string Html { get; set; }
+    }
+
+    static class Samples
+    {
+
+        public static SamplesResult NewMethod1()
         {
-
-            NewMethod1();
-            Console.WriteLine("done");
-            Console.ReadKey();
-
-        }
-
-#if true
-        private static void NewMethod1()
-        {
-            var names = "a b c d e f g h i".Split(" ");
+            var names = "a b c d e f g h i".Split(' ');
             var values = new[] { 28, 55, 43, 91, 81, 53, 19, 87, 52 };
             var source = names.Zip(values, (f, s) => new { name = f, value = s });
 
 
-            Vega.SetData(source)
+            var res = Vega.SetData(source)
                 .SetMark(Vega.Marks.Bar)
                 .SetEncoding(x: "name:N", y: "value:Q")
-                .ToFile("res.html");
+                .ToHtml();
+
+            return new SamplesResult
+            {
+                Desc = "普通柱状图",
+                Html = res
+            };
         }
 
-        private static void NewMethod2()
+        public static SamplesResult NewMethod2()
         {
             var url = @"https://vega.github.io/vega-datasets/data/movies.json";
 
 
-            Vega.SetData(url)
+            var res = Vega.SetData(url)
                 .SetMark(Vega.Marks.Bar)
                 .SetEncoding(en =>
                 {
                     en.X = Vega.Field("IMDB_Rating:Q").SetBin(true);
                     en.Y = Vega.Field().SetAggregate("count");
                 })
-                .ToFile("res.html");
+                .ToHtml();
+
+            return new SamplesResult
+            {
+                Desc = "柱状图，y轴直接指定聚合 count，按x轴统计个数",
+                Html = res
+            };
         }
 
-        private static void NewMethod3()
+        public static SamplesResult NewMethod3()
         {
             var url = @"https://vega.github.io/vega-datasets/data/stocks.csv";
 
@@ -76,10 +78,14 @@ namespace ConsoleApp_test
             var line = cm.SetMark(Vega.Marks.Line);
             var point = cm.SetMark(Vega.Marks.Point);
 
-            (line + point).ToFile("res.html");
+            return new SamplesResult
+            {
+                Desc = "点图 + 线图 叠加",
+                Html = (line + point).ToHtml()
+            };
         }
 
-        private static void NewMethod4()
+        public static SamplesResult NewMethod4()
         {
             var url = @"https://vega.github.io/vega-datasets/data/stocks.csv";
 
@@ -101,16 +107,19 @@ namespace ConsoleApp_test
             var line = cm.SetMark(Vega.Marks.Line);
             var point = cm.SetMark(Vega.Marks.Point);
 
-            (line + point).ToFile("res.html");
+            return new SamplesResult
+            {
+                Desc = "设置条件，价格高于400的，点图中的点会设置为红色",
+                Html = (line + point).ToHtml()
+            };
         }
 
 
-        private static void NewMethod5()
+        public static SamplesResult NewMethod5()
         {
             var url = @"https://vega.github.io/vega-datasets/data/cars.json";
 
-            var selection = Vega.SingleSelection("pts").SetOn("mouseover")
-                .SetNearest(true);
+            var selection = Vega.SingleSelection("pts").SetOn("mouseover");
 
 
             var cond = Vega.Condition()
@@ -129,14 +138,19 @@ namespace ConsoleApp_test
 
             var rect = cm.SetMark(Vega.Marks.Rect);
 
-            rect.ToFile("res.html");
+            return new SamplesResult
+            {
+                Desc = "鼠标经过，高亮颜色，其他地方灰色",
+                Html = rect.ToHtml()
+            };
         }
 
-        private static void NewMethod6()
+        public static SamplesResult NewMethod6()
         {
             var url = @"https://vega.github.io/vega-datasets/data/cars.json";
 
-            var selection = Vega.IntervalSelection("pts");
+            var selection = Vega.IntervalSelection("pts")
+                .SetBind(IntervalSelectionBind.Scales);
 
             var cond = Vega.Condition()
                            .AddFiled(Vega.Field("Origin:N"))
@@ -155,11 +169,17 @@ namespace ConsoleApp_test
             var left = cm.SetEncoding(en => en.X = Vega.Field("Acceleration:Q"));
             var right = cm.SetEncoding(en => en.X = Vega.Field("Miles_per_Gallon:Q"));
 
-            (left | right).ToFile("res.html");
+            return new SamplesResult
+            {
+                Desc = @"2个表相同的y轴，不同的x轴。
+能用鼠标点击拖动移动图表显示范围，用滚轮放大或缩小范围。
+并且2个表是同步更新",
+                Html = (left | right).ToHtml()
+            };
         }
-#endif
 
-        private static void NewMethod7()
+
+        public static SamplesResult NewMethod7()
         {
             var url = @"https://vega.github.io/vega-datasets/data/cars.json";
             //设置范围选择
@@ -180,14 +200,19 @@ namespace ConsoleApp_test
 
             var left = cm.SetEncoding(en => en.X = Vega.Field("Acceleration:Q"));
             var right = cm.SetEncoding(en => en.X = Vega.Field("Miles_per_Gallon:Q"));
-            //左右2张图
-            (left | right).ToFile("res.html");
+            //左右2张图 
+            return new SamplesResult
+            {
+                Desc = @"范围选择，鼠标左键点击可画出范围框，然后点击框能拖动。
+框范围内正常颜色，其他为灰色",
+                Html = (left | right).ToHtml()
+            };
         }
 
         /// <summary>
         /// https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding
         /// </summary>
-        private static void NewMethod8()
+        public static SamplesResult NewMethod8()
         {
             var url = @"https://vega.github.io/vega-datasets/data/population.json";
 
@@ -202,7 +227,11 @@ namespace ConsoleApp_test
                         })
                         .SetFilter(d => d.Number("year") == 2000);
 
-            cm.ToFile("res.html");
+            return new SamplesResult
+            {
+                Desc = "Y轴按x轴值倒序排序",
+                Html = cm.ToHtml()
+            };
 
         }
     }
@@ -216,10 +245,7 @@ namespace ConsoleApp_test
 
 
 
-    class TestClass
-    {
-        public string Value { get; set; }
 
-        public int Number { get; set; }
-    }
 }
+
+
