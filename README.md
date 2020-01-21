@@ -3,6 +3,8 @@ a .NET port of Vega
 
 
 # 教程
+[Winform示例](src/CrystalWind.VegaSharp.WindowsFormsSamples)
+
 
 ## 前提
 Nuget 安装：
@@ -86,6 +88,7 @@ var url = @"https://vega.github.io/vega-datasets/data/movies.json";
 Vega.SetData(url)
     ………………
 ```
+---
 
 ## Mark
 
