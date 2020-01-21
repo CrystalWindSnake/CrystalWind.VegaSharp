@@ -23,9 +23,16 @@ namespace ConsoleApp_test
         static void Main(string[] args)
         {
 
-            NewMethod1();
+            test1();
             Console.WriteLine("done");
             Console.ReadKey();
+
+        }
+
+
+        private static void test1()
+        {
+
 
         }
 
