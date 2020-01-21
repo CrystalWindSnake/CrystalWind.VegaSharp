@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace CrystalWind.VegaSharp.Core
+namespace CrystalWind.VegaSharp.VegaMode
 {
     public static class SpecificationExtensions
     {
@@ -51,55 +51,24 @@ namespace CrystalWind.VegaSharp.Core
             return engine;
         }
 
-        //public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Action<Encoding> action)
-        //{
-        //    engine = engine.Copy();
-        //    if (engine.Encoding == null)
-        //    {
-        //        engine.Encoding = new Encoding();
-        //    }
-        //    action(engine.Encoding as Encoding);
-        //    return engine;
-        //}
-
-
-        private static SingleViewSpecification SetEncodingDynamic(this SingleViewSpecification engine, Field x, Field y, dynamic color)
+        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, string x, string y)
         {
-            engine = engine.Copy();
-            engine.Encoding = new Encoding
+            return engine.SetEncoding(en =>
             {
-                X = x,
-                Y = y,
-                Color = color
-            };
-            return engine;
+                en.X = Vega.Field(x);
+                en.Y = Vega.Field(y);
+            });
         }
 
-        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Field x, Field y, Field color)
+        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine,
+            string x, string y, string color)
         {
-            return engine.SetEncodingDynamic(x, y, color);
-        }
-
-        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Field x, Field y, ColorCondition color)
-        {
-            return engine.SetEncodingDynamic(x, y, color);
-        }
-
-        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Field x = null, Field y = null)
-        {
-            return engine.SetEncodingDynamic(x, y, null);
-        }
-
-        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, string xName, string yName
-            , FieldType xFieldType = FieldType.Nominal, FieldType yFieldType = FieldType.Quantitative)
-        {
-            engine = engine.Copy();
-            engine.Encoding = new Encoding
+            return engine.SetEncoding(en =>
             {
-                X = Vega.X_Y(xName, xFieldType),
-                Y = Vega.X_Y(yName, yFieldType),
-            };
-            return engine;
+                en.X = Vega.Field(x);
+                en.Y = Vega.Field(y);
+                en.Color = Vega.Field(color);
+            });
         }
 
 

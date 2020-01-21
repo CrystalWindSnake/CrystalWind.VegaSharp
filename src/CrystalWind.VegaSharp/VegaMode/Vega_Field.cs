@@ -1,4 +1,5 @@
-﻿using CrystalWind.VegaSharp.Core;
+﻿using CrystalWind.VegaSharp.Common.Helper;
+using CrystalWind.VegaSharp.Core;
 using CrystalWind.VegaSharp.Core.Configurations;
 using CrystalWind.VegaSharp.Core.Data;
 using CrystalWind.VegaSharp.Core.Encodings;
@@ -9,25 +10,32 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CrystalWind.VegaSharp
+namespace CrystalWind.VegaSharp.VegaMode
 {
     public static partial class Vega
     {
 
 
-        public static XYField X()
+        public static XYField Field()
         {
             return new XYField();
         }
 
-        public static XYField Y()
+        public static XYField Field(string name)
         {
-            return new XYField();
+            var f = new XYField();
+            return f.SetName(name);
         }
+
 
         public static XYField SetName(this XYField x, string name)
         {
-            x.Name = name;
+            var res = NameTypeHelpler.Convert(name);
+            x.Name = res.Name;
+            if (res.Type != FieldType.None)
+            {
+                x.Type = res.Type;
+            }
             return x;
         }
 

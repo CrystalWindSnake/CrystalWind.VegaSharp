@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CrystalWind.VegaSharp
+namespace CrystalWind.VegaSharp.VegaMode
 {
     public static partial class Vega
     {

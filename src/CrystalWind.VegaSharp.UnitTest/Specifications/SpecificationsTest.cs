@@ -3,6 +3,7 @@ using CrystalWind.VegaSharp.Core.Data;
 using CrystalWind.VegaSharp.Core.Encodings;
 using CrystalWind.VegaSharp.Core.Marks;
 using CrystalWind.VegaSharp.Core.Specifications;
+using CrystalWind.VegaSharp.VegaMode;
 using System;
 using System.IO;
 using Xunit;
@@ -24,7 +25,7 @@ namespace CrystalWind.VegaSharp.UnitTest
             var mark = new Bar();
             var ec = new Encoding
             {
-                X = Vega.X_Y("Name"),
+                X = Vega.Field("Name"),
                 Y = Vega.X_Y("Value", FieldType.Quantitative)
             };
 

@@ -1,4 +1,6 @@
-﻿namespace CrystalWind.VegaSharp.Core.Encodings
+﻿using CrystalWind.VegaSharp.Core.Encodings;
+
+namespace CrystalWind.VegaSharp.VegaMode
 {
     public interface IXY : IVegaObject
     {

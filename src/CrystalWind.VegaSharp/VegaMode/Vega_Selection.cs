@@ -12,7 +12,7 @@ using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace CrystalWind.VegaSharp
+namespace CrystalWind.VegaSharp.VegaMode
 {
     public static partial class Vega
     {

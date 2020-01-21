@@ -5,16 +5,17 @@ using CrystalWind.VegaSharp.Core.Encodings;
 using CrystalWind.VegaSharp.Core.Marks;
 using CrystalWind.VegaSharp.Core.Selections;
 using CrystalWind.VegaSharp.Core.Specifications;
+using CrystalWind.VegaSharp.Shadow;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CrystalWind.VegaSharp
+namespace CrystalWind.VegaSharp.VegaMode
 {
     public static partial class Vega
     {
-
+        public static VegaMarks Marks { get; } = new VegaMarks();
 
         private static SingleViewSpecification GetDefalut()
         {

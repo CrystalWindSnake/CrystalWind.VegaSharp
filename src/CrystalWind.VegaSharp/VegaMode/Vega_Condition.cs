@@ -12,7 +12,7 @@ using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace CrystalWind.VegaSharp
+namespace CrystalWind.VegaSharp.VegaMode
 {
     public static partial class Vega
     {
@@ -45,14 +45,14 @@ namespace CrystalWind.VegaSharp
             return condition.AddTest(Datum.To(test));
         }
 
-        static public Condition AddFiled(this Condition condition, string fieldName = null, FieldType fieldType = FieldType.None
-            , string aggregate = null)
+        static public Condition AddFiled(this Condition condition, XYField field)
         {
-            condition.Field = fieldName;
-            condition.Type = fieldType;
-            condition.Aggregate = aggregate;
+            condition.Field = field.Name;
+            condition.Type = field.Type;
+            condition.Aggregate = field.Aggregate;
             return condition;
         }
+
 
         static public Condition AddValue(this Condition condition, string value)
         {

@@ -1,8 +1,5 @@
 ﻿using System;
 
-using CrystalWind.VegaSharp.Core;
-using CrystalWind.VegaSharp.Core.Marks;
-using CrystalWind.VegaSharp;
 using Newtonsoft.Json;
 using System.IO;
 using System.Drawing;
@@ -14,9 +11,11 @@ using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace ConsoleApp_test
 {
-
+    using CrystalWind.VegaSharp;
+    using CrystalWind.VegaSharp.VegaMode;
 
 
     class Program
@@ -24,13 +23,13 @@ namespace ConsoleApp_test
         static void Main(string[] args)
         {
 
-            NewMethod8();
+            NewMethod7();
             Console.WriteLine("done");
             Console.ReadKey();
 
         }
 
-#if tru
+#if true
         private static void NewMethod1()
         {
             var names = "a b c d e f g h i".Split(" ");
@@ -39,8 +38,8 @@ namespace ConsoleApp_test
 
 
             Vega.SetData(source)
-                .SetMark(Mark.Bar)
-                .SetEncoding(xName: "name", yName: "value")
+                .SetMark(Vega.Marks.Bar)
+                .SetEncoding(x: "name", y: "value")
                 .ToFile("res.html");
         }
 
@@ -50,11 +49,11 @@ namespace ConsoleApp_test
 
 
             Vega.SetData(url)
-                .SetMark(Mark.Bar)
+                .SetMark(Vega.Marks.Bar)
                 .SetEncoding(en =>
                 {
-                    en.X = Vega.X_Y("IMDB_Rating", FieldType.Quantitative, bin: true);
-                    en.Y = Vega.X_Y_Aggregate("count");
+                    en.X = Vega.Field("IMDB_Rating:Q").SetBin(true);
+                    en.Y = Vega.Field().SetAggregate("count");
                 })
                 .ToFile("res.html");
         }
@@ -66,16 +65,16 @@ namespace ConsoleApp_test
             var cm = Vega.SetData(url)
                            .SetEncoding(en =>
                            {
-                               en.X = Vega.X_Y("date", FieldType.Temporal);
-                               en.Y = Vega.X_Y("price", FieldType.Quantitative);
-                               en.Color = Vega.X_Y("symbol", FieldType.Nominal);
+                               en.X = Vega.Field("date:T");
+                               en.Y = Vega.Field("price:Q");
+                               en.Color = Vega.Field("symbol:N");
                            })
                            .SetFilter(d => d.String("symbol") == "GOOG")
                 //.SetFilter("datum.symbol == 'GOOG'")
                 ;
 
-            var line = cm.SetMark(Mark.Line);
-            var point = cm.SetMark(Mark.Point);
+            var line = cm.SetMark(Vega.Marks.Line);
+            var point = cm.SetMark(Vega.Marks.Point);
 
             (line + point).ToFile("res.html");
         }
@@ -92,15 +91,15 @@ namespace ConsoleApp_test
             var cm = Vega.SetData(url)
                            .SetEncoding(en =>
                            {
-                               en.X = Vega.X_Y("date", FieldType.Temporal);
-                               en.Y = Vega.X_Y("price", FieldType.Quantitative);
+                               en.X = Vega.Field().SetName("date:T");
+                               en.Y = Vega.Field().SetName("price:Q");
                                en.Color = cond.ToColor(Color.Blue);
                            })
                            .SetFilter(d => d.String("symbol") == "GOOG")
                 ;
 
-            var line = cm.SetMark(Mark.Line);
-            var point = cm.SetMark(Mark.Point);
+            var line = cm.SetMark(Vega.Marks.Line);
+            var point = cm.SetMark(Vega.Marks.Point);
 
             (line + point).ToFile("res.html");
         }
@@ -115,20 +114,20 @@ namespace ConsoleApp_test
 
 
             var cond = Vega.Condition()
-                           .AddFiled(aggregate: "count", fieldType: FieldType.Quantitative)
+                           .AddFiled(Vega.Field().SetAggregate("count").SetType(FieldType.Quantitative))
                            .AddSelection(selection);
 
 
             var cm = Vega.SetData(url)
                            .SetEncoding(en =>
                            {
-                               en.X = Vega.X_Y("Origin", FieldType.Ordinal);
-                               en.Y = Vega.X_Y("Cylinders", FieldType.Ordinal);
+                               en.X = Vega.Field().SetName("Origin:O");
+                               en.Y = Vega.Field().SetName("Cylinders:O");
                                en.Color = cond.ToColor(Color.Gray);
                            })
                             .SetSelection(selection);
 
-            var rect = cm.SetMark(Mark.Rect);
+            var rect = cm.SetMark(Vega.Marks.Rect);
 
             rect.ToFile("res.html");
         }
@@ -140,21 +139,21 @@ namespace ConsoleApp_test
             var selection = Vega.IntervalSelection("pts");
 
             var cond = Vega.Condition()
-                           .AddFiled(fieldName: "Origin", fieldType: FieldType.Nominal)
+                           .AddFiled(Vega.Field("Origin:N"))
                            .AddSelection(selection);
 
 
             var cm = Vega.SetData(url)
-                        .SetMark(Mark.Point)
+                        .SetMark(Vega.Marks.Point)
                         .SetEncoding(en =>
                         {
-                            en.Y = Vega.X_Y("Horsepower", FieldType.Quantitative);
+                            en.Y = Vega.Field().SetName("Horsepower:Q");
                             en.Color = cond.ToColor(Color.Gray);
                         })
                         .SetSelection(selection);
 
-            var left = cm.SetEncoding(en => en.X = Vega.X_Y("Acceleration", FieldType.Quantitative));
-            var right = cm.SetEncoding(en => en.X = Vega.X_Y("Miles_per_Gallon", FieldType.Quantitative));
+            var left = cm.SetEncoding(en => en.X = Vega.Field("Acceleration:Q"));
+            var right = cm.SetEncoding(en => en.X = Vega.Field("Miles_per_Gallon:Q"));
 
             (left | right).ToFile("res.html");
         }
@@ -163,29 +162,25 @@ namespace ConsoleApp_test
         private static void NewMethod7()
         {
             var url = @"https://vega.github.io/vega-datasets/data/cars.json";
-
-            var selection = Vega.IntervalSelection("pts")
-                //.SetEncodings("x")
-                .SetEmpty(SelectionEmpty.None)
-                .SetBind(IntervalSelectionBind.Scales);
-
+            //设置范围选择
+            var selection = Vega.IntervalSelection("pts");
+            //设置条件
             var cond = Vega.Condition()
-                           .AddFiled(fieldName: "Origin", fieldType: FieldType.Nominal)
+                           .AddFiled(Vega.Field("Origin:N"))
                            .AddSelection(selection);
 
-
-            var cm = Vega.SetData(url)
-                        .SetMark(Mark.Point)
-                        .SetEncoding(en =>
+            var cm = Vega.SetData(url)//数据
+                        .SetMark(Vega.Marks.Point) // 图表形状
+                        .SetEncoding(en => //数据对应
                         {
-                            en.Y = Vega.Y().SetName("Horsepower").SetType(FieldType.Quantitative);
+                            en.Y = Vega.Field("Horsepower:Q");
                             en.Color = cond.ToColor(Color.Gray);
                         })
                         .SetSelection(selection);
 
-            var left = cm.SetEncoding(en => en.X = Vega.X().SetName("Acceleration").SetType(FieldType.Quantitative));
-            var right = cm.SetEncoding(en => en.X = Vega.X().SetName("Miles_per_Gallon").SetType(FieldType.Quantitative));
-
+            var left = cm.SetEncoding(en => en.X = Vega.Field("Acceleration:Q"));
+            var right = cm.SetEncoding(en => en.X = Vega.Field("Miles_per_Gallon:Q"));
+            //左右2张图
             (left | right).ToFile("res.html");
         }
 
@@ -197,11 +192,11 @@ namespace ConsoleApp_test
             var url = @"https://vega.github.io/vega-datasets/data/population.json";
 
             var cm = Vega.SetData(url)
-                        .SetMark(Mark.Bar)
+                        .SetMark(Vega.Marks.Bar)
                         .SetEncoding(en =>
                         {
-                            en.Y = Vega.Y().SetName("age").SetType(FieldType.Ordinal).SetSort("-x");
-                            en.X = Vega.X().SetName("people").SetType(FieldType.Quantitative)
+                            en.Y = Vega.Field().SetName("age:O").SetSort("-x");
+                            en.X = Vega.Field().SetName("people:Q")
                                             .SetAggregate("sum");
 
                         })
@@ -223,8 +218,8 @@ namespace ConsoleApp_test
 
     class TestClass
     {
-        public IMixValue Value { get; set; }
+        public string Value { get; set; }
 
-        public IMixValue Number { get; set; }
+        public int Number { get; set; }
     }
 }
