@@ -1,6 +1,6 @@
 ﻿namespace CrystalWind.VegaSharp.Core.Encodings
 {
-    public class TimeUnit
+    public class TimeUnit : IVegaObject
     {
     }
 }

@@ -34,14 +34,36 @@ namespace ConsoleApp_test
         {
             var url = @"https://vega.github.io/vega-datasets/data/movies.json";
 
+
+
+            var x = Vega.PcField("IMDB_Rating:Q").SetBin(true);
+            var y = Vega.PcField("Rotten_Tomatoes_Rating:Q").SetBin(true);
+
             var rect = Vega.SetData(url)
                 .SetMark(Vega.Marks.Rect)
                 .SetEncoding(en =>
                 {
-                    en.X = Vega.PcField("IMDB_Rating:Q").SetBin(true);
-                    en.Y = Vega.PcField("Rotten_Tomatoes_Rating:Q").SetBin(true);
-                    //en.Color = Vega
+                    en.X = x;
+                    en.Y = y;
+                    en.Color = Vega.McField()
+                                .SetAggregate("count")
+                                .SetScale("greenblue")
+                                .SetLegend("总数");
                 });
+
+            var circ = Vega.SetData(url)
+                .SetMark(Vega.Marks.Point)
+                .SetEncoding(en =>
+                {
+                    en.X = x;
+                    en.Y = y;
+                    en.Color = Vega.McField().SetColor("grey");
+                    en.Size = Vega.McField()
+                                .SetAggregate("count")
+                                .SetLegend("选中的总数");
+                });
+
+            (rect + circ).ToFile("res.html");
 
         }
 

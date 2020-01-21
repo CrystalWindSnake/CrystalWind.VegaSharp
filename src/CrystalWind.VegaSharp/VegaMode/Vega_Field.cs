@@ -8,6 +8,7 @@ using CrystalWind.VegaSharp.Core.Specifications;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace CrystalWind.VegaSharp.VegaMode
@@ -16,6 +17,7 @@ namespace CrystalWind.VegaSharp.VegaMode
     {
 
 
+        #region PositionChannel
         public static PositionField PcField()
         {
             return new PositionField();
@@ -27,6 +29,14 @@ namespace CrystalWind.VegaSharp.VegaMode
             return f.SetName(name);
         }
 
+        public static PositionField SetSort(this PositionField x, string sort)
+        {
+            x.Sort = sort;
+            return x;
+        }
+        #endregion
+
+        #region MarkPropertyChannel
         public static MarkPropertyField McField()
         {
             return new MarkPropertyField();
@@ -38,15 +48,53 @@ namespace CrystalWind.VegaSharp.VegaMode
             return f.SetName(name);
         }
 
-        public static PositionField SetSort(this PositionField x, string sort)
+        public static MarkPropertyField SetColor(this MarkPropertyField x, string color)
         {
-            x.Sort = sort;
+            x.Value = color;
             return x;
         }
 
+        public static MarkPropertyField SetColor(this MarkPropertyField x, Color color)
+        {
+            x.Value = color;
+            return x;
+        }
 
+        public static MarkPropertyField SetScale(this MarkPropertyField x, string scale)
+        {
+            var s = new Scale
+            {
+                Scheme = scale
+            };
+            x.Scale = s;
+            return x;
+        }
+
+        public static MarkPropertyField SetScale(this MarkPropertyField x, CategoricalSchemes categorical)
+        {
+            x.Scale = categorical;
+
+            return x;
+        }
+
+        public static MarkPropertyField SetLegend(this MarkPropertyField x, string title)
+        {
+            if (x.Legend == null)
+            {
+                x.Legend = new Legend();
+            }
+            x.Legend.Title = title;
+
+            return x;
+        }
+        #endregion
+
+
+
+
+        #region Field 方法
         public static T SetName<T>(this T x, string name)
-            where T : Field
+           where T : Field
         {
             var res = NameTypeHelpler.Convert(name);
             x.Name = res.Name;
@@ -74,9 +122,11 @@ namespace CrystalWind.VegaSharp.VegaMode
         public static T SetAggregate<T>(this T x, string method)
             where T : Field
         {
+            x.SetType(FieldType.Quantitative);
             x.Aggregate = method;
             return x;
         }
+        #endregion
 
 
 

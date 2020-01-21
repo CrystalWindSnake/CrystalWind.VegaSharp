@@ -11,7 +11,7 @@ namespace CrystalWind.VegaSharp.Core.Encodings
     public class MarkPropertyField : Field, IMarkPropertyChannel
     {
         public dynamic Scale { get; set; }
-        public dynamic Legend { get; set; }
+        public Legend Legend { get; set; }
         public dynamic Condition { get; set; }
 
     }
