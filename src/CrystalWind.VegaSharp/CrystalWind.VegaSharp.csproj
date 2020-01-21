@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\Encodings\ColorCondition.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Template.html" />
   </ItemGroup>
 

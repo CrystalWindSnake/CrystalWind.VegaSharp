@@ -16,19 +16,37 @@ namespace CrystalWind.VegaSharp.VegaMode
     {
 
 
-        public static XYField Field()
+        public static PositionField PcField()
         {
-            return new XYField();
+            return new PositionField();
         }
 
-        public static XYField Field(string name)
+        public static PositionField PcField(string name)
         {
-            var f = new XYField();
+            var f = new PositionField();
             return f.SetName(name);
         }
 
+        public static MarkPropertyField McField()
+        {
+            return new MarkPropertyField();
+        }
 
-        public static XYField SetName(this XYField x, string name)
+        public static MarkPropertyField McField(string name)
+        {
+            var f = new MarkPropertyField();
+            return f.SetName(name);
+        }
+
+        public static PositionField SetSort(this PositionField x, string sort)
+        {
+            x.Sort = sort;
+            return x;
+        }
+
+
+        public static T SetName<T>(this T x, string name)
+            where T : Field
         {
             var res = NameTypeHelpler.Convert(name);
             x.Name = res.Name;
@@ -39,63 +57,30 @@ namespace CrystalWind.VegaSharp.VegaMode
             return x;
         }
 
-        public static XYField SetType(this XYField x, FieldType type)
+        public static T SetType<T>(this T x, FieldType type)
+            where T : Field
         {
             x.Type = type;
             return x;
         }
 
-        public static XYField SetBin(this XYField x, bool bin)
+        public static T SetBin<T>(this T x, bool bin)
+            where T : Field
         {
             x.Bin = bin;
             return x;
         }
 
-        public static XYField SetAggregate(this XYField x, string method)
+        public static T SetAggregate<T>(this T x, string method)
+            where T : Field
         {
             x.Aggregate = method;
             return x;
         }
 
-        public static XYField SetSort(this XYField x, string sort)
-        {
-            x.Sort = sort;
-            return x;
-        }
 
-        public static Field X_Y_Aggregate(string method)
-        {
-            return X_Y_Aggregate(method, FieldType.Quantitative);
-        }
 
-        public static Field X_Y_Aggregate(string method, FieldType fieldType)
-        {
-            return new Field
-            {
-                Aggregate = method,
-                Type = fieldType
-            };
-        }
 
-        public static Field X_Y(string name)
-        {
-            return X_Y(name, FieldType.Nominal);
-        }
-
-        public static Field X_Y(string name, FieldType fieldType)
-        {
-            return X_Y(name, fieldType, false);
-        }
-
-        public static Field X_Y(string name, FieldType fieldType, bool bin)
-        {
-            return new Field
-            {
-                Name = name,
-                Type = fieldType,
-                Bin = bin
-            };
-        }
 
 
     }

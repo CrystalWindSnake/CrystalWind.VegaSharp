@@ -2,8 +2,22 @@
 a .NET port of Vega
 
 
-# 教程
+# 效果
+`Vega`、`Vega-lite` 使得可以用`json`描述图表可视化，`VegaSharp`基于此，能让你使用声明方式作出数据可视化图表。
+
+---
+
 [Winform示例](src/CrystalWind.VegaSharp.WindowsFormsSamples)
+
+---
+
+
+
+
+
+# 教程
+
+
 
 
 ## 前提

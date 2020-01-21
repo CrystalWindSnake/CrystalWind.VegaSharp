@@ -25,8 +25,8 @@ namespace CrystalWind.VegaSharp.UnitTest
             var mark = new Bar();
             var ec = new Encoding
             {
-                X = Vega.Field("Name"),
-                Y = Vega.X_Y("Value", FieldType.Quantitative)
+                X = Vega.PcField("Name"),
+                Y = Vega.PcField("Value:Q")
             };
 
             var eg = new SingleViewSpecification

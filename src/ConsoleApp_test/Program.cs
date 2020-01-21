@@ -32,7 +32,16 @@ namespace ConsoleApp_test
 
         private static void test1()
         {
+            var url = @"https://vega.github.io/vega-datasets/data/movies.json";
 
+            var rect = Vega.SetData(url)
+                .SetMark(Vega.Marks.Rect)
+                .SetEncoding(en =>
+                {
+                    en.X = Vega.PcField("IMDB_Rating:Q").SetBin(true);
+                    en.Y = Vega.PcField("Rotten_Tomatoes_Rating:Q").SetBin(true);
+                    //en.Color = Vega
+                });
 
         }
 
@@ -59,8 +68,8 @@ namespace ConsoleApp_test
                 .SetMark(Vega.Marks.Bar)
                 .SetEncoding(en =>
                 {
-                    en.X = Vega.Field("IMDB_Rating:Q").SetBin(true);
-                    en.Y = Vega.Field().SetAggregate("count");
+                    en.X = Vega.PcField("IMDB_Rating:Q").SetBin(true);
+                    en.Y = Vega.PcField().SetAggregate("count");
                 })
                 .ToFile("res.html");
         }
@@ -72,9 +81,9 @@ namespace ConsoleApp_test
             var cm = Vega.SetData(url)
                            .SetEncoding(en =>
                            {
-                               en.X = Vega.Field("date:T");
-                               en.Y = Vega.Field("price:Q");
-                               en.Color = Vega.Field("symbol:N");
+                               en.X = Vega.PcField("date:T");
+                               en.Y = Vega.PcField("price:Q");
+                               en.Color = Vega.McField("symbol:N");
                            })
                            .SetFilter(d => d.String("symbol") == "GOOG")
                 //.SetFilter("datum.symbol == 'GOOG'")
@@ -98,8 +107,8 @@ namespace ConsoleApp_test
             var cm = Vega.SetData(url)
                            .SetEncoding(en =>
                            {
-                               en.X = Vega.Field().SetName("date:T");
-                               en.Y = Vega.Field().SetName("price:Q");
+                               en.X = Vega.PcField().SetName("date:T");
+                               en.Y = Vega.PcField().SetName("price:Q");
                                en.Color = cond.ToColor(Color.Blue);
                            })
                            .SetFilter(d => d.String("symbol") == "GOOG")
@@ -121,15 +130,15 @@ namespace ConsoleApp_test
 
 
             var cond = Vega.Condition()
-                           .AddFiled(Vega.Field().SetAggregate("count").SetType(FieldType.Quantitative))
+                           .AddFiled(Vega.PcField().SetAggregate("count").SetType(FieldType.Quantitative))
                            .AddSelection(selection);
 
 
             var cm = Vega.SetData(url)
                            .SetEncoding(en =>
                            {
-                               en.X = Vega.Field().SetName("Origin:O");
-                               en.Y = Vega.Field().SetName("Cylinders:O");
+                               en.X = Vega.PcField().SetName("Origin:O");
+                               en.Y = Vega.PcField().SetName("Cylinders:O");
                                en.Color = cond.ToColor(Color.Gray);
                            })
                             .SetSelection(selection);
@@ -146,7 +155,7 @@ namespace ConsoleApp_test
             var selection = Vega.IntervalSelection("pts");
 
             var cond = Vega.Condition()
-                           .AddFiled(Vega.Field("Origin:N"))
+                           .AddFiled(Vega.PcField("Origin:N"))
                            .AddSelection(selection);
 
 
@@ -154,13 +163,13 @@ namespace ConsoleApp_test
                         .SetMark(Vega.Marks.Point)
                         .SetEncoding(en =>
                         {
-                            en.Y = Vega.Field().SetName("Horsepower:Q");
+                            en.Y = Vega.PcField().SetName("Horsepower:Q");
                             en.Color = cond.ToColor(Color.Gray);
                         })
                         .SetSelection(selection);
 
-            var left = cm.SetEncoding(en => en.X = Vega.Field("Acceleration:Q"));
-            var right = cm.SetEncoding(en => en.X = Vega.Field("Miles_per_Gallon:Q"));
+            var left = cm.SetEncoding(en => en.X = Vega.PcField("Acceleration:Q"));
+            var right = cm.SetEncoding(en => en.X = Vega.PcField("Miles_per_Gallon:Q"));
 
             (left | right).ToFile("res.html");
         }
@@ -173,20 +182,20 @@ namespace ConsoleApp_test
             var selection = Vega.IntervalSelection("pts");
             //设置条件
             var cond = Vega.Condition()
-                           .AddFiled(Vega.Field("Origin:N"))
+                           .AddFiled(Vega.PcField("Origin:N"))
                            .AddSelection(selection);
 
             var cm = Vega.SetData(url)//数据
                         .SetMark(Vega.Marks.Point) // 图表形状
                         .SetEncoding(en => //数据对应
                         {
-                            en.Y = Vega.Field("Horsepower:Q");
+                            en.Y = Vega.PcField("Horsepower:Q");
                             en.Color = cond.ToColor(Color.Gray);
                         })
                         .SetSelection(selection);
 
-            var left = cm.SetEncoding(en => en.X = Vega.Field("Acceleration:Q"));
-            var right = cm.SetEncoding(en => en.X = Vega.Field("Miles_per_Gallon:Q"));
+            var left = cm.SetEncoding(en => en.X = Vega.PcField("Acceleration:Q"));
+            var right = cm.SetEncoding(en => en.X = Vega.PcField("Miles_per_Gallon:Q"));
             //左右2张图
             (left | right).ToFile("res.html");
         }
@@ -202,8 +211,8 @@ namespace ConsoleApp_test
                         .SetMark(Vega.Marks.Bar)
                         .SetEncoding(en =>
                         {
-                            en.Y = Vega.Field().SetName("age:O").SetSort("-x");
-                            en.X = Vega.Field().SetName("people:Q")
+                            en.Y = Vega.PcField().SetName("age:O").SetSort("-x");
+                            en.X = Vega.PcField().SetName("people:Q")
                                             .SetAggregate("sum");
 
                         })

@@ -45,7 +45,7 @@ namespace CrystalWind.VegaSharp.VegaMode
             return condition.AddTest(Datum.To(test));
         }
 
-        static public Condition AddFiled(this Condition condition, XYField field)
+        static public Condition AddFiled(this Condition condition, Field field)
         {
             condition.Field = field.Name;
             condition.Type = field.Type;
@@ -72,9 +72,9 @@ namespace CrystalWind.VegaSharp.VegaMode
             return condition;
         }
 
-        static public ColorCondition ToColor(this Condition condition, Color defaultColor)
+        static public MarkPropertyField ToColor(this Condition condition, Color defaultColor)
         {
-            return new ColorCondition
+            return new MarkPropertyField
             {
                 Condition = condition,
                 Value = defaultColor

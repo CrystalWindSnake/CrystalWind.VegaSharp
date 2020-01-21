@@ -38,25 +38,36 @@ namespace CrystalWind.VegaSharp.VegaMode
             return engine;
         }
 
-        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Action<EncodingWrapper> action)
+        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Action<Encoding> action)
         {
             engine = engine.Copy();
             if (engine.Encoding == null)
             {
                 engine.Encoding = new Encoding();
             }
-            EncodingWrapper wp = engine.Encoding;
-            action(wp);
-            engine.Encoding = wp;
+            action(engine.Encoding);
             return engine;
         }
+
+        //public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Action<EncodingWrapper> action)
+        //{
+        //    engine = engine.Copy();
+        //    if (engine.Encoding == null)
+        //    {
+        //        engine.Encoding = new Encoding();
+        //    }
+        //    EncodingWrapper wp = engine.Encoding;
+        //    action(wp);
+        //    engine.Encoding = wp;
+        //    return engine;
+        //}
 
         public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, string x, string y)
         {
             return engine.SetEncoding(en =>
             {
-                en.X = Vega.Field(x);
-                en.Y = Vega.Field(y);
+                en.X = Vega.PcField(x);
+                en.Y = Vega.PcField(y);
             });
         }
 
@@ -65,9 +76,9 @@ namespace CrystalWind.VegaSharp.VegaMode
         {
             return engine.SetEncoding(en =>
             {
-                en.X = Vega.Field(x);
-                en.Y = Vega.Field(y);
-                en.Color = Vega.Field(color);
+                en.X = Vega.PcField(x);
+                en.Y = Vega.PcField(y);
+                en.Color = Vega.McField(color);
             });
         }
 

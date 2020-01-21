@@ -9,9 +9,13 @@ namespace CrystalWind.VegaSharp.Core.Encodings
 
         public FieldType Type { get; set; } = FieldType.None;
 
-        public bool Bin { get; set; }
+        public dynamic Bin { get; set; }
 
         public string Aggregate { get; set; }
+        public TimeUnit TimeUnit { get; set; }
 
+        public string Title { get; set; }
+
+        public dynamic Value { get; set; }
     }
 }
