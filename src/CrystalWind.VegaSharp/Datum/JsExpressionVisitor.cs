@@ -45,7 +45,19 @@ namespace CrystalWind.VegaSharp
 
         protected override Expression VisitMember(MemberExpression node)
         {
-            stringBuilder.Append(node.Member.Name);
+            //日期属性的调用
+            if (node.Member.DeclaringType == typeof(DateTime))
+            {
+                stringBuilder.Append(node.Member.Name.ToLower());
+                stringBuilder.Append("(");
+                Visit(node.Expression);
+                stringBuilder.Append(")");
+            }
+            else
+            {
+                stringBuilder.Append(node.Member.Name);
+            }
+
             return node;
         }
 
@@ -74,6 +86,7 @@ namespace CrystalWind.VegaSharp
 
             return node;
         }
+
 
         protected override Expression VisitBinary(BinaryExpression node)
         {
