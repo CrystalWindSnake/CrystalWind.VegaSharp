@@ -65,7 +65,7 @@ namespace CrystalWind.VegaSharp.Core.Specifications
 
         public string ToHtml()
         {
-            return Resources.Template.Replace("{0}", ToJsonView());
+            return string.Format(Resources.Template, ToJsonView());
         }
 
         public void ToFile(string path)

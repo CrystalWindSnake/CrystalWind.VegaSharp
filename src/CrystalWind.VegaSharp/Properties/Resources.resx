@@ -130,9 +130,9 @@
 
     &lt;style media="screen"&gt;
         /* Add space between Vega-Embed links  */
-        .vega-actions a {
+        .vega-actions a {{
             margin-right: 5px;
-        }
+        }}
     &lt;/style&gt;
 &lt;/head&gt;
 

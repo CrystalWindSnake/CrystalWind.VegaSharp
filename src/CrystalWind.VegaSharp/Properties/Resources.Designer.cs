@@ -73,14 +73,14 @@ namespace CrystalWind.VegaSharp.Properties {
         ///
         ///    &lt;style media=&quot;screen&quot;&gt;
         ///        /* Add space between Vega-Embed links  */
-        ///        .vega-actions a {
+        ///        .vega-actions a {{
         ///            margin-right: 5px;
-        ///        }
+        ///        }}
         ///    &lt;/style&gt;
         ///&lt;/head&gt;
         ///
         ///&lt;body&gt;
-        ///    &lt;!-- Container for the visualization -- [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    &lt;!-- Container for the visualization  [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string Template {
             get {
