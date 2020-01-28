@@ -38,6 +38,26 @@ namespace CrystalWind.VegaSharp.VegaMode
             return engine;
         }
 
+        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, params IEncodingAction[] encodingActions)
+        {
+            return engine.SetEncoding(en =>
+            {
+                foreach (var act in encodingActions)
+                {
+                    act.Action(en);
+                }
+            });
+        }
+
+
+        public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Encoding encoding)
+        {
+            engine = engine.Copy();
+            engine.Encoding = encoding;
+            return engine;
+        }
+
+
         public static SingleViewSpecification SetEncoding(this SingleViewSpecification engine, Action<Encoding> action)
         {
             engine = engine.Copy();

@@ -23,10 +23,28 @@ namespace ConsoleApp_test
         static void Main(string[] args)
         {
 
-            test1();
+            test2();
             Console.WriteLine("done");
             Console.ReadKey();
 
+        }
+
+        private static void test2()
+        {
+            var names = "a b c d e f g h i".Split(" ");
+            var values = new[] { 28, 55, 43, 91, 81, 53, 19, 87, 52 };
+            var source = names.Zip(values, (f, s) => new { name = f, value = s });
+
+            var cond = Vega.ColorCondition(d => d.Number("value") > 60, Color.Red);
+
+            Vega.SetData(source)
+                .SetMark(Vega.Marks.Bar)
+                .SetEncoding(
+                    Vega.Y("value:Q"),
+                    Vega.X("name:N"),
+                    Vega.Color(condition: cond, color: Color.Blue)
+                    )
+                .ToFile("res.html");
         }
 
 
